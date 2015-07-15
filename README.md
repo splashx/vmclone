@@ -38,6 +38,9 @@ _Or pass the root CA file path via PERL_LWP_SSL_CA_PATH:_
 $ export PERL_LWP_SSL_CA_PATH=/path/to/ca/certs
 ```
 
+## Prepping the VM Template
+Always use a vm template to clone. For best cloning results follow these instructions [here](http://kb.vmware.com/kb/2075048)
+
 ### Usage
 
 ```bash
