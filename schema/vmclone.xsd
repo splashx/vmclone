@@ -11,10 +11,8 @@
          </xs:restriction>
       </xs:simpleType>
 </xs:element>
-<xs:element name="UTC-Clock" type="xs:boolean"/>
 <xs:element name="Virtual-Machine-Name" type="xs:string"/>
 <xs:element name="Timezone" type="xs:integer"/>
-<xs:element name="Linux-Timezone" type="xs:string"/>
 <xs:element name="Domain" type="xs:string"/>
 <xs:element name="Domain-User-Name" type="xs:string"/>
 <xs:element name="Domain-User-Password" type="xs:string"/>
@@ -43,13 +41,11 @@
    <xs:element ref="Auto-Logon"/>
    <xs:element ref="Virtual-Machine-Name"/>
    <xs:element ref="Timezone"/>
-   <xs:element ref="Linux-Timezone"/>
-   <xs:element ref="UTC-Clock"/>
    <xs:element ref="Domain"/>
    <xs:element ref="Domain-User-Name"/>
-   <xs:element ref="Domain-User-Password"/>    
-   <xs:element ref="Full-Name"/>   
-   <xs:element ref="AutoMode"/>   
+   <xs:element ref="Domain-User-Password"/>
+   <xs:element ref="Full-Name"/>
+   <xs:element ref="AutoMode"/>
    <xs:element ref="AutoUsers"/>
    <xs:element ref="Orgnization-Name"/>
    <xs:element ref="ProductId"/>

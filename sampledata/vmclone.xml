@@ -39,9 +39,7 @@ These values can be changed according to the requirement and network-->
     <Cust-Type>lin</Cust-Type>
 	  <Auto-Logon>1</Auto-Logon>
 	  <Virtual-Machine-Name>testlin</Virtual-Machine-Name>
-          <Timezone>100</Timezone>
-          <Linux-Timezone>Europe/Berlin</Linux-Timezone>
-          <UTC-Clock>true</UTC-Clock>
+    <Timezone>100</Timezone>
 	  <Domain>VMWARE</Domain>
 	  <Domain-User-Name>Administrator</Domain-User-Name>
 	  <Domain-User-Password>secret</Domain-User-Password>

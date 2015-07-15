@@ -24,7 +24,7 @@ package VMUtils;
 # host          : host name
 # filter_hash   : The hash map which contains the filter criteria for virtual machines
 #                 based on the machines attributes like guest OS, powerstate etc.
-# 
+#
 # Output:
 # ------
 # It returns an array of virtual machines found as per the selection criteria
@@ -40,7 +40,7 @@ sub get_vms {
       $begin =
          Vim::find_entity_views (view_type => 'Datacenter',
                                 filter => {name => $datacenter});
-                                
+
       unless (@$begin) {
          Util::trace(0, "Datacenter $datacenter not found.\n");
          return;
@@ -129,7 +129,7 @@ sub get_vms {
           return;
        }
    }
-   
+
     if ($entityViews) {return \@$entityViews;}
    else {return 0;}
 }
@@ -138,8 +138,8 @@ sub get_vms {
 # This subroutine constructs the customization spec for virtual machines.
 # Input Parameters:
 # ----------------
-# filename      : The location of the input XML file. This file contains the 
-#                 various properties for customization spec 
+# filename      : The location of the input XML file. This file contains the
+#                 various properties for customization spec
 #
 # Output:
 # ------
@@ -156,9 +156,7 @@ sub get_customization_spec {
    my $custType = "Win";
    my $autologon = 1;
    my $computername = "compname";
-   my $timezone = 190;
-   my $linuxTimezone = "America/Chicago";
-   my $utcClock = 1;
+   my $timezone = "100";
    my $username;
    my $userpassword;
    my $domain;
@@ -175,8 +173,8 @@ sub get_customization_spec {
    my $subnet;
    my $primaryWINS;
    my $secondaryWINS;
-   
-  
+
+
    foreach (@cspec) {
       if ($_->findvalue('Cust-Type')) {
          $custType = $_->findvalue('Cust-Type');
@@ -189,12 +187,6 @@ sub get_customization_spec {
       }
       if ($_->findvalue('Timezone')) {
          $timezone = $_->findvalue('Timezone');
-      }
-      if ($_->findvalue('Linux-Timezone')) {
-         $linuxTimezone = $_->findvalue('Linux-Timezone');
-      }
-      if ($_->findvalue('UTC-Clock')) {
-         $utcClock = $_->findvalue('UTC-Clock');
       }
       if ($_->findvalue('Domain')) {
          $domain = $_->findvalue('Domain');
@@ -244,7 +236,7 @@ sub get_customization_spec {
          $secondaryWINS = $_->findvalue('IP0secondaryWINS');
       }
    }
-  
+
    my $customization_global_settings = CustomizationGlobalIPSettings->new();
    my $customization_identity_settings = CustomizationIdentitySettings->new();
 
@@ -267,16 +259,16 @@ sub get_customization_spec {
                                  fullName => $fullname,
                                  orgName => $organization_name,
                                  productId => $productId);
-   
+
    my $customLicenseDataMode = new CustomizationLicenseDataMode($autoMode);
-   my $licenseFilePrintData = 
+   my $licenseFilePrintData =
       CustomizationLicenseFilePrintData->new(autoMode => $customLicenseDataMode,
                                              autoUsers => $autoUsers);
    my $cust_prep;
 
    # test for Linux or Windows customization
    if ( $custType eq "Win" ) {
-     $cust_prep = 
+     $cust_prep =
       CustomizationSysprep->new(guiUnattended => $cust_gui_unattended,
                                 identification => $cust_identification,
                                 licenseFilePrintData => $licenseFilePrintData,
@@ -285,8 +277,6 @@ sub get_customization_spec {
      $cust_prep =
       CustomizationLinuxPrep->new(domain => $dnsDomain,
                                 hostName => $cust_name);
-#                                hwClockUTC => $utcClock,
-#                                timeZone => $linuxTimezone);
    }
 
    if ( defined $ip && $ip ne "dhcp" ) {
@@ -294,8 +284,8 @@ sub get_customization_spec {
    } else {
       $customization_fixed_ip = CustomizationDhcpIpGenerator->new();
    }
-   
-   
+
+
    my $cust_ip_settings =
       CustomizationIPSettings->new(ip => $customization_fixed_ip,
                                    gateway => \@gateway,
@@ -401,7 +391,7 @@ sub relocate_virtualmachine {
    my $targethostview = $args{targethostview};
    my $datastore = $args{datastore};
    my $sourcehostview = $args{sourcehostview};
-   
+
    my $relocate_spec = VirtualMachineRelocateSpec->new (datastore => $datastore,
                                                               host => $targethostview,
                                                               pool => $pool);
@@ -439,7 +429,7 @@ sub relocate_virtualmachine {
       else {
          Util::trace(0, "Fault " . $@);
       }
-   }   
+   }
 }
 
 # This subroutine find the hardware device on virtual machine.
@@ -454,7 +444,7 @@ sub find_device {
    my %args = @_;
    my $vm = $args{vm};
    my $name = $args{controller};
-   
+
    my $devices = $vm->config->hardware->device;
    foreach my $device (@$devices) {
       return $device if ($device->deviceInfo->label eq $name);
@@ -489,7 +479,7 @@ sub get_diskmode {
    my %args = @_;
    my $nopersist = $args{nopersist};
    my $independent = $args{independent};
-   
+
    my $nonPersistent = $nopersist;
    my $diskMode = ($independent) ? 'independent' : '';
    if ($diskMode eq 'independent') {
@@ -538,9 +528,9 @@ sub get_vdisk_spec {
       else {
          Util::trace(0,"No host found for the virtual machine");
          return;
-      }      
+      }
       my $host_storage_system = $host_view->config;
-      my $lunId = $host_storage_system->storageDevice->scsiLun->[0]->uuid;	  
+      my $lunId = $host_storage_system->storageDevice->scsiLun->[0]->uuid;
       my $deviceName = $host_storage_system->storageDevice->scsiLun->[0]->deviceName;
       $disk_backing_info = VirtualDiskRawDiskMappingVer1BackingInfo->new(compatibilityMode => "physical",
                                                                          deviceName => $deviceName,
@@ -576,7 +566,7 @@ sub add_virtualdisk {
    my %args = @_;
    my $vm = $args{vm};
    my $devspec = $args{devspec};
-   
+
    my $vmspec = VirtualMachineConfigSpec->new(deviceChange => [$devspec] );
    eval {
       $vm->ReconfigVM( spec => $vmspec );
@@ -595,7 +585,7 @@ sub add_virtualdisk {
          }
          elsif (ref($@->detail) eq 'InvalidDeviceSpec') {
             Util::trace(0,"Invalid backing info spec.");
-         }		 
+         }
          elsif (ref($@->detail) eq 'InvalidPowerState') {
             Util::trace(0,"Attempted operation cannot be performed on the current state.");
          }
@@ -745,13 +735,13 @@ sub create_network_spec {
          }
       }
    }
-   
+
    if($device) {
       my $devspec = VirtualDeviceConfigSpec->new(operation => $config_spec_operation,
                                               device => $device);
       return $devspec;
    }
-   
+
    return undef;
 }
 
@@ -887,7 +877,7 @@ sub create_floppy_spec {
          }
       }
    }
-   
+
    if($floppy) {
       my $devspec = VirtualDeviceConfigSpec->new(operation => $config_spec_operation,
                                               device => $floppy);
@@ -970,13 +960,13 @@ sub create_cd_spec {
                                             controller => 'IDE 0');
       my $controllerKey = $controller->key;
       my $unitNumber = $#{$controller->device} + 1;
-      
+
 
       my $cd_backing_info
          = VirtualCdromRemoteAtapiBackingInfo->new(deviceName => $name);
 
       my $description = Description->new(label => $name, summary => '111');
-      
+
       $cd = VirtualCdrom->new(controllerKey => $controllerKey,
                               unitNumber => $unitNumber,
                               key => -1,
@@ -1051,7 +1041,7 @@ sub create_cd_spec {
                                                  device => $cd);
       return $devspec;
    }
-   
+
    return undef;
 }
 

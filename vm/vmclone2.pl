@@ -93,7 +93,7 @@ sub clone_vm {
          my $host_name =  Opts::get_option('vmhost');
          my $host_view = Vim::find_entity_view(view_type => 'HostSystem',
                                          filter => {'name' => $host_name});
-                                         
+
          if (!$host_view) {
             Util::trace(0, "Host '$host_name' not found\n");
             return;
@@ -139,8 +139,8 @@ sub clone_vm {
             elsif ((Opts::get_option('customize_guest') eq "yes")
                 && (Opts::get_option('customize_vm') ne "yes")) {
                $customization_spec = VMUtils::get_customization_spec
-                                              (Opts::get_option('filename'));               
-               
+                                              (Opts::get_option('filename'));
+
                $clone_spec = VirtualMachineCloneSpec->new(
                                                    powerOn => 0,
                                                    template => 0,
@@ -160,7 +160,7 @@ sub clone_vm {
                                                    customization => $customization_spec,
                                                    config => $config_spec,
                                                    );
-               
+
             }
             else {
                $clone_spec = VirtualMachineCloneSpec->new(
@@ -169,7 +169,7 @@ sub clone_vm {
                                                    location => $relocate_spec,
                                                    );
             }
-            
+
 
             $Data::Dumper::Sortkeys = 1; #Sort the keys in the output
             $Data::Dumper::Deepcopy = 1; #Enable deep copies of structures
@@ -261,7 +261,7 @@ sub get_config_spec() {
    my $nic_poweron = 1;
 
    foreach (@cspec) {
-   
+
       if ($_->findvalue('Guest-Id')) {
          $guestid = $_->findvalue('Guest-Id');
       }
@@ -285,7 +285,7 @@ sub get_config_spec() {
 sub get_disksize {
    my $disksize = 4194304;
    my $parser = XML::LibXML->new();
-   
+
    eval {
       my $tree = $parser->parse_file(Opts::get_option('filename'));
       my $root = $tree->getDocumentElement;
@@ -295,7 +295,7 @@ sub get_disksize {
          $disksize = $_->findvalue('Disksize');
       }
    };
-   
+
    return $disksize;
 }
 
@@ -364,7 +364,7 @@ sub validate {
           Util::trace(0,"\nMust specify 'yes' or 'no' for customize_vm option");
           $valid = 0;
        }
-       
+
     }
     if (Opts::option_is_set('customize_guest')) {
        if ((Opts::get_option('customize_guest') ne "yes")
@@ -377,207 +377,3 @@ sub validate {
 }
 
 __END__
-
-=head1 NAME
-
-vmclone.pl - Perform clone operation on virtual machine and
-             customize operation on both virtual machine and the guest.
-
-=head1 SYNOPSIS
-
- vmclone.pl [options]
-
-=head1 DESCRIPTION
-
-VI Perl command-line utility allows you to clone a virtual machine. You 
-can customize the virtual machine or the guest operating system as part 
-of the clone operation.
-
-=head1 OPTIONS
-
-=head2 GENERAL OPTIONS
-
-=over
-
-=item B<vmhost>
-
-Required. Name of the host containing the virtual machine.
-
-=item B<vmname>
-
-Required. Name of the virtual machine whose clone is to be created.
-
-=item B<vmname_destination>
-
-Required. Name of the clone virtual machine which will be created.
-
-=item B<datastore>
-
-Optional. Name of a data center. If none is given, the script uses the default data center.
-
-=back
-
-=head2 CUSTOMIZE GUEST OPTIONS
-
-=over
-
-=item B<customize_guest>
-
-Required. Customize guest is used to customize the network settings of the guest
-operating system. Options are Yes/No.
-
-=item B<filename>
-
-Required. It is the name of the file in which values of parameters to be
-customized is written e.g. --filename  clone_vm.xml.
-
-=item B<schema>
-
-Required. It is the name of the schema which validates the filename.
-
-=back
-
-=head2 CUSTOMIZE VM OPTIONS
-
-=over
-
-=item B<customize_vm>
-
-Required. customize_vm is used to customize the virtual machine settings
-like disksize, memory. If yes is written it will be customized.
-
-=item B<filename>
-
-Required. It is the name of the file in which values of parameters to be
-customized is written e.g. --filename  clone_vm.xml.
-
-=item B<schema>
-
-Required. It is the name of the schema which validates the filename.
-
-=back
-
-=head2 INPUT PARAMETERS
-
-=head3 GUEST CUSTOMIZATION
-
-The parameters for customizing the guest os are specified in an XML
-file. The structure of the input XML file is:
-
- <Specification>
-  <Customization-Spec>
-  </Customization-Spec>
- </Specification>
-
-Following are the input parameters:
-
-=over
-
-=item B<Auto-Logon>
-
-Required. Flag to specify whether auto logon should be enabled or disabled.
-
-=item B<Virtual-Machine-Name>
-
-Required. Name of the virtual machine to be created.
-
-=item B<Timezone>
-
-Required. Time zone property of guest OS.
-
-=item B<Domain>
-
-Required. The domain that the virtual machine should join.
-
-=item B<Domain-User-Name>
-
-Required. The domain user account used for authentication.
-
-=item B<Domain-User-Password>
-
-Required. The password for the domain user account used for authentication.
-
-=item B<Full-Name>
-
-Required. User's full name.
-
-=item B<Orgnization-Name>
-
-Required. User's organization.
-
-=back
-
-=head3 VIRTUAL MACHINE CUSTOMIZATION
-
-The parameters for customizing the virtual machine are specified in an XML
-file. The structure of the input XML file is:
-
-   <Specification>
-    <Config-Spec-Spec>
-       <!--Several parameters like Guest-Id, Memory, Disksize, Number-of-CPUS etc-->
-    </Config-Spec>
-   </Specification>
-
-Following are the input parameters:
-
-=over
-
-=item B<Guest-Id>
-
-Required. Short guest operating system identifier.
-
-=item B<Memory>
-
-Required. Size of a virtual machine's memory, in MB.
-
-=item B<Number-of-CPUS>
-
-Required. Number of virtual processors in a virtual machine.
-
-=back
-
-See the B<vmcreate.pl> page for an example of a virtual machine XML file.
-
-=head1 EXAMPLES
-
-Making a clone without any customization:
-
- perl vmclone.pl --username username --password mypassword
-                 --vmhost <hostname/ipaddress> --vmname DVM1 --vmname_destination DVM99
-                 --url https://<ipaddress>:<port>/sdk/webService
-
-If datastore is given:
-
- perl vmclone.pl --username username --password mypassword
-                 --vmhost <hostname/ipaddress> --vmname DVM1 --vmname_destination DVM99
-                 --url https://<ipaddress>:<port>/sdk/webService --datastore storage1
-
-Making a clone and customizing the VM:
-
- perl vmclone.pl --username myusername --password mypassword
-                 --vmhost <hostname/ipaddress> --vmname DVM1 --vmname_destination Clone_VM
-                 --url https://<ipaddress>:<port>/sdk/webService --customize_vm yes
-                 --filename clone_vm.xml --schema clone_schema.xsd
-
-Making a clone and customizing the guestOS:
-
- perl vmclone.pl --username myuser --password mypassword --operation clone
-                 --vmhost <hostname/ipaddress> --vmname DVM1 --vmname_destination DVM99
-                 --url https://<ipaddress>:<port>/sdk/webService --customize_guest yes
-                 --filename clone_vm.xml --schema clone_schema.xsd
-
-Making a clone and customizing both guestos and VM:
-
- perl vmclone.pl --username myuser --password mypassword
-                 --vmhost <hostname/ipaddress> --vmname DVM1 --vmname_destination DVM99
-                 --url https://<ipaddress>:<port>/sdk/webService --customize_guest yes
-                 --customize_vm yes --filename clone_vm.xml --schema clone_schema.xsd
-
-All the parameters which are to be customized are written in the vmclone.xml file.
-
-=head1 SUPPORTED PLATFORMS
-
-All operations supported on VirtualCenter 2.0.1 or later.
-
-To perform the clone operation, you must connect to a VirtualCenter server.
-
