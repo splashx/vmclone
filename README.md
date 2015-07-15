@@ -1,11 +1,11 @@
 # vmclone
 
 
-# Prepping the enviroment
+## Prepping the enviroment
 
-## OSX
+### OSX
 
-### Perl dependencies
+#### Perl dependencies
 ```bash
 $ sudo cpan Class::MethodMaker Crypt::SSLeay SOAP::Lite
 ```
@@ -20,7 +20,7 @@ perl Makefile.PL && \
 make -Wpointer-sign && \
 sudo make install
 ```
-### VI Perl Toolkit Release 1.6
+#### VI Perl Toolkit Release 1.6
 Download the VI Perl Toolkit source code from [here](https://my.vmware.com/group/vmware/details?productId=20&downloadGroup=VI-PERL-TK160-OS) and extract it (the folder vmware-viperl-distrib is created).
 
 ```bash
@@ -38,7 +38,7 @@ _Or pass the root CA file path via PERL_LWP_SSL_CA_PATH:_
 $ export PERL_LWP_SSL_CA_PATH=/path/to/ca/certs
 ```
 
-## Usage
+### Usage
 
 ```bash
 $ perl vmclone2.pl --customize_guest yes \
