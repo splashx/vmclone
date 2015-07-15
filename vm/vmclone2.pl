@@ -19,6 +19,9 @@ $Util::script_version = "1.0";
 
 sub check_missing_value;
 
+# Ignore SSL warnings or invalid server warning
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
+
 my %opts = (
    vmhost => {
       type => "=s",
