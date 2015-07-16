@@ -112,7 +112,11 @@ sub clone_vm {
          my $network_dev_key;
          my $devices = $_->config->hardware->device;
          foreach my $device (@$devices) {
-            if (ref $device eq "VirtualVmxnet3") {
+            if (  (ref $device eq "VirtualVmxnet3") ||
+                  (ref $device eq "VirtualE1000") ||
+                  (ref $device eq "VirtualE1000e") ||
+                  (ref $device eq "VirtualPCNet32") ||
+                  (ref $device eq "VirtualVmxnet2") ) {
                $network_dev_key = $device->key;
                last;
             }
