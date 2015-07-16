@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Specification>
+   <Customization-Spec>
+          <Domain>sec-cdc.local</Domain>
+          <IP>192.168.1.150</IP>
+          <Gateway>192.168.1.1</Gateway>
+          <Netmask>255.255.255.0</Netmask>
+   </Customization-Spec>
+ <Virtual-Machine-Spec>
+      <Memory>1024</Memory>
+      <Disksize>36864</Disksize>
+      <Number-of-CPUS>1</Number-of-CPUS>
+      <Network>script_pg</Network>
+  </Virtual-Machine-Spec>
+</Specification>
