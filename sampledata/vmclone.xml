@@ -37,10 +37,13 @@ These values can be changed according to the requirement and network-->
 <Specification>
    <Customization-Spec>
     <Cust-Type>lin</Cust-Type>
-	  <Auto-Logon>1</Auto-Logon>
 	  <Virtual-Machine-Name>testlin</Virtual-Machine-Name>
-    <Timezone>100</Timezone>
-	  <Domain>VMWARE</Domain>
+    <Domain>sec-cdc.local</Domain>
+	  <IP>192.168.111.111</IP>
+	  <Gateway>192.168.111.1</Gateway>
+	  <Netmask>255.255.255.0</Netmask>
+	  <Auto-Logon>1</Auto-Logon>
+	  <Timezone>100</Timezone>
 	  <Domain-User-Name>Administrator</Domain-User-Name>
 	  <Domain-User-Password>secret</Domain-User-Password>
 	  <Full-Name>VMware</Full-Name>
@@ -48,18 +51,11 @@ These values can be changed according to the requirement and network-->
 	  <AutoUsers>5</AutoUsers>
 	  <Orgnization-Name>VMware</Orgnization-Name>
 	  <ProductId>XXXX-XXXX-XXXX-XXXX-XXXX</ProductId>
-	  <IP0>192.168.0.16</IP0>
-	  <IP0Gateway>192.168.0.1</IP0Gateway>
-	  <IP0dnsServers>192.168.0.43:192.168.0.1</IP0dnsServers>
-	  <IP0Subnet>255.255.255.0</IP0Subnet>
-	  <IP0dnsDomain>calls.local</IP0dnsDomain>
-	  <IP0primaryWINS>192.168.0.43</IP0primaryWINS>
-	  <IP0secondaryWINS></IP0secondaryWINS>
    </Customization-Spec>
  <Virtual-Machine-Spec>
-      <Guest-Id>winXPProGuest</Guest-Id>
-      <Memory>256</Memory>
+      <Memory>1024</Memory>
       <Disksize>4194304</Disksize>
       <Number-of-CPUS>1</Number-of-CPUS>
+      <Network>script_pg</Network>
   </Virtual-Machine-Spec>
 </Specification>
