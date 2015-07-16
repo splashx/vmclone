@@ -3,17 +3,13 @@
 
 <!-- definition of simple elements -->
 <xs:element name="Cust-Type" type="xs:string"/>
-<xs:element name="Auto-Logon">
-  <xs:simpleType>
-         <xs:restriction base="xs:integer">
-            <xs:enumeration value="0"/>
-            <xs:enumeration value="1"/>
-         </xs:restriction>
-      </xs:simpleType>
-</xs:element>
 <xs:element name="Virtual-Machine-Name" type="xs:string"/>
-<xs:element name="Timezone" type="xs:integer"/>
+<xs:element name="IP" type="xs:string"/>
+<xs:element name="Netmask" type="xs:string"/>
+<xs:element name="Gateway" type="xs:string"/>
 <xs:element name="Domain" type="xs:string"/>
+<xs:element name="Auto-Logon" type="xs:integer"/>
+<xs:element name="Timezone" type="xs:integer"/>
 <xs:element name="Domain-User-Name" type="xs:string"/>
 <xs:element name="Domain-User-Password" type="xs:string"/>
 <xs:element name="Full-Name" type="xs:string"/>
@@ -21,27 +17,24 @@
 <xs:element name="AutoUsers" type="xs:integer"/>
 <xs:element name="Orgnization-Name" type="xs:string"/>
 <xs:element name="ProductId" type="xs:string"/>
-<xs:element name="Guest-Id" type="xs:string"/>
 <xs:element name="Disksize" type="xs:integer"/>
 <xs:element name="Memory" type="xs:integer"/>
 <xs:element name="Number-of-CPUS" type="xs:integer"/>
-<xs:element name="IP0" type="xs:string"/>
-<xs:element name="IP0Gateway" type="xs:string"/>
-<xs:element name="IP0dnsServers" type="xs:string"/>
-<xs:element name="IP0Subnet" type="xs:string"/>
-<xs:element name="IP0dnsDomain" type="xs:string"/>
-<xs:element name="IP0primaryWINS" type="xs:string"/>
-<xs:element name="IP0secondaryWINS" type="xs:string"/>
+<xs:element name="Network" type="xs:string"/>
+
 
 <!-- definition of complex elements -->
 <xs:element name="Customization-Spec">
  <xs:complexType>
   <xs:sequence>
    <xs:element ref="Cust-Type"/>
-   <xs:element ref="Auto-Logon"/>
    <xs:element ref="Virtual-Machine-Name"/>
-   <xs:element ref="Timezone"/>
    <xs:element ref="Domain"/>
+   <xs:element ref="IP"/>
+   <xs:element ref="Gateway"/>
+   <xs:element ref="Netmask"/>
+   <xs:element ref="Auto-Logon"/>
+   <xs:element ref="Timezone"/>
    <xs:element ref="Domain-User-Name"/>
    <xs:element ref="Domain-User-Password"/>
    <xs:element ref="Full-Name"/>
@@ -49,13 +42,6 @@
    <xs:element ref="AutoUsers"/>
    <xs:element ref="Orgnization-Name"/>
    <xs:element ref="ProductId"/>
-   <xs:element ref="IP0"/>
-   <xs:element ref="IP0Gateway"/>
-   <xs:element ref="IP0dnsServers"/>
-   <xs:element ref="IP0Subnet"/>
-   <xs:element ref="IP0dnsDomain"/>
-   <xs:element ref="IP0primaryWINS"/>
-   <xs:element ref="IP0secondaryWINS"/>
   </xs:sequence>
  </xs:complexType>
 </xs:element>
@@ -63,10 +49,10 @@
 <xs:element name="Virtual-Machine-Spec">
  <xs:complexType>
   <xs:sequence>
-   <xs:element ref="Guest-Id"/>
-   <xs:element ref="Memory"/>
-   <xs:element ref="Disksize"/>
-   <xs:element ref="Number-of-CPUS"/>
+    <xs:element ref="Memory"/>
+    <xs:element ref="Disksize"/>
+    <xs:element ref="Number-of-CPUS"/>
+    <xs:element ref="Network"/>
   </xs:sequence>
  </xs:complexType>
 </xs:element>
