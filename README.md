@@ -18,4 +18,4 @@ $ perl vmclone2.pl --customize_guest yes \
 
 # References
 
-[Installing the vSphere SDK for Perl on OS X](https://communities.vmware.com/docs/DOC-12746)
+[Latest vmclone2.pl that now includes Linux cloning](https://communities.vmware.com/docs/DOC-12746)
